@@ -1,0 +1,30 @@
+kind: live
+name: Run remote debugging with PyCharm
+author: Alexey Naiden
+descr: runs remote debugging with PyCharm
+
+inputs:
+  image:
+    descr: image name
+  volumes_data_remote:
+    descr: reference to a data volume
+  volumes_code_remote:
+    descr: reference to a code volume
+  volumes_config_remote:
+    descr: reference to a config volume
+  volumes_results_remote:
+    descr: reference to a results volume
+
+job:
+    image: $[[ inputs.image ]]
+    volumes:
+      - "$[[ inputs.volumes_data_remote ]]:/project/data:ro"
+      - "$[[ inputs.volumes_code_remote ]]:/project/modules:rw"
+      - "$[[ inputs.volumes_config_remote ]]:/project/config:ro"
+      - "$[[ inputs.volumes_results_remote ]]:/project/results:rw"
+    port_forward:
+      - "2211:22"      
+    env:
+      EXPOSE_SSH: "yes"
+      PYTHONPATH: /project/modules
+    cmd: bash
