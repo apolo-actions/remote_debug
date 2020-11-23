@@ -4,6 +4,9 @@ author: Alexey Naiden
 descr: runs remote debugging with PyCharm
 
 inputs:
+  local_port:
+    descr: local port number for remote debugger
+    default: "2211"
   image:
     descr: image name
   volumes_data_remote:
@@ -23,7 +26,7 @@ job:
       - "$[[ inputs.volumes_config_remote ]]:/project/config:ro"
       - "$[[ inputs.volumes_results_remote ]]:/project/results:rw"
     port_forward:
-      - "2211:22"      
+      - "$[[ inputs.local_port ]]:22"      
     env:
       EXPOSE_SSH: "yes"
       PYTHONPATH: /project/modules
