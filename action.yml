@@ -17,17 +17,31 @@ inputs:
     descr: reference to a config volume
   volumes_results_remote:
     descr: reference to a results volume
+  secret_files:
+    default: "[]"
+    descr: volumes to be mounted as secrets
+  additional_env_vars:
+    default: "{}"
+    descr: additional environment variables for job
 
 job:
     image: $[[ inputs.image ]]
-    volumes:
-      - "$[[ inputs.volumes_data_remote ]]:/project/data:ro"
-      - "$[[ inputs.volumes_code_remote ]]:/project/modules:rw"
-      - "$[[ inputs.volumes_config_remote ]]:/project/config:ro"
-      - "$[[ inputs.volumes_results_remote ]]:/project/results:rw"
+    volumes: "${{ 
+      from_json(inputs.secret_files) + 
+      [
+        inputs.volumes_data_remote + ':/project/data:ro', 
+        inputs.volumes_code_remote + ':/project/modules:rw', 
+        inputs.volumes_config_remote + ':/project/config:ro', 
+        inputs.volumes_results_remote + ':/project/results:rw'
+      ] 
+      }}
+    env: "${{ 
+      from_json(inputs.additional_env_vars) | 
+      {
+        'EXPOSE_SSH': 'yes', 
+        'PYTHONPATH': '/project/modules'
+      } 
+      }}"
     port_forward:
       - "$[[ inputs.local_port ]]:22"      
-    env:
-      EXPOSE_SSH: "yes"
-      PYTHONPATH: /project/modules
     cmd: bash
