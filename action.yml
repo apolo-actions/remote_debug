@@ -34,7 +34,7 @@ job:
         inputs.volumes_config_remote + ':/project/config:ro', 
         inputs.volumes_results_remote + ':/project/results:rw'
       ] 
-      }}
+      }}"
     env: "${{ 
       from_json(inputs.additional_env_vars) | 
       {
