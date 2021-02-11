@@ -7,6 +7,9 @@ inputs:
   local_port:
     descr: local port number for remote debugger
     default: "2211"
+  preset:
+    descr: resource preset to use, when running the job
+    default: ""
   image:
     descr: image name
   volumes_data_remote:
@@ -26,6 +29,7 @@ inputs:
 
 job:
     image: $[[ inputs.image ]]
+    preset: $[[ inputs.preset ]]
     volumes: "${{ 
       from_json(inputs.secret_files) + 
       [
