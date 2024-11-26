@@ -1,6 +1,6 @@
-# Remote Debug action for neuro-flow to be used with Neu.ro template
+# Remote Debug action for apolo-flow to be used with Apolo flow template
 
-This is a [`neuro-flow`](https://github.com/neuro-inc/neuro-flow) action enabling remote debugging. It's intended to be used with Neu.ro [platform template](https://github.com/neuro-inc/cookiecutter-neuro-project), but can be adapted for other use cases as well.
+This is a [`apolo-flow`](https://github.com/neuro-inc/neuro-flow) action enabling remote debugging. It's intended to be used with Apolo [platform template](https://github.com/neuro-inc/flow-template), but can be adapted for other use cases as well.
 
 This action exposes SSH port (22) and maps it to port 2211 used for PyCharm remote Python debugging feature.
 

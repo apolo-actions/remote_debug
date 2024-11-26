@@ -34,9 +34,9 @@ volumes:
 
 jobs:
   remote_debug:
-    action: gh:neuro-actions/remote_debug@master
+    action: gh:apolo-actions/remote_debug@master
     args:
-      image: neuromation/base
+      image: ghcr.io/neuro-inc/base:latest
       volumes_data_remote: $[[ volumes.data.remote ]]
       volumes_code_remote: $[[ volumes.code.remote ]]
       volumes_config_remote: $[[ volumes.config.remote ]]
